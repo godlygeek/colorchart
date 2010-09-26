@@ -383,10 +383,21 @@ function! s:SetupColorChartImpl()
 
   exe printf('hi colorchart_color_on_0   ctermfg=%d ctermbg=0',  c)
   exe printf('hi colorchart_color_on_15  ctermfg=%d ctermbg=15', c)
-  exe printf('hi colorchart_color_on_256 ctermfg=%d ctermbg=bg', c)
+
+  if synIDattr(synIDtrans(hlID("Normal")), "bg", "cterm") == -1
+    exe printf('hi colorchart_color_on_256 ctermfg=%d ctermbg=NONE', c)
+  else
+    exe printf('hi colorchart_color_on_256 ctermfg=%d ctermbg=bg', c)
+  endif
+
   exe printf('hi colorchart0_on_color    ctermbg=%d ctermfg=0',  c)
   exe printf('hi colorchart15_on_color   ctermbg=%d ctermfg=15', c)
-  exe printf('hi colorchart256_on_color  ctermbg=%d ctermfg=fg', c)
+
+  if synIDattr(synIDtrans(hlID("Normal")), "fg", "cterm") == -1
+    exe printf('hi colorchart256_on_color  ctermbg=%d ctermfg=NONE', c)
+  else
+    exe printf('hi colorchart256_on_color  ctermbg=%d ctermfg=fg', c)
+  endif
 
   call s:JumpToColor()
 endfunction
@@ -674,10 +685,21 @@ function! s:UpdatePreview()
 
   exe printf('hi colorchart_color_on_0   ctermfg=%d ctermbg=0',  color)
   exe printf('hi colorchart_color_on_15  ctermfg=%d ctermbg=15', color)
-  exe printf('hi colorchart_color_on_256 ctermfg=%d ctermbg=bg', color)
+
+  if synIDattr(synIDtrans(hlID("Normal")), "bg", "cterm") == -1
+    exe printf('hi colorchart_color_on_256 ctermfg=%d ctermbg=NONE', color)
+  else
+    exe printf('hi colorchart_color_on_256 ctermfg=%d ctermbg=bg', color)
+  endif
+
   exe printf('hi colorchart0_on_color    ctermbg=%d ctermfg=0',  color)
   exe printf('hi colorchart15_on_color   ctermbg=%d ctermfg=15', color)
-  exe printf('hi colorchart256_on_color  ctermbg=%d ctermfg=fg', color)
+
+  if synIDattr(synIDtrans(hlID("Normal")), "fg", "cterm") == -1
+    exe printf('hi colorchart256_on_color  ctermbg=%d ctermfg=NONE', color)
+  else
+    exe printf('hi colorchart256_on_color  ctermbg=%d ctermfg=fg', color)
+  endif
 
   setlocal nomodifiable nomodified
 
