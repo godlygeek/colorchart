@@ -65,6 +65,11 @@ function! s:ColorChartInit()
 
   let s:angle = 0
   let s:origin = 0
+  let s:chart = 'ribbon'
+
+  if &t_Co >= 88
+    let s:chart = 'whales'
+  endif
 
   let s:last_color = 0
 
@@ -227,7 +232,7 @@ function! s:ColorChartInit()
     let actualval = get(g:, 'colorchart_' . pref, -1)
 
     if type(actualval) == type(0) || type(actualval) == type('')
-      let {pref}_pref = str2nr(actualval)
+      let {pref}_pref = actualval
     elseif type(actualval) == type({})
       let {pref}_pref = get(actualval, &t_Co, -1)
     else
@@ -309,13 +314,7 @@ function! s:SetupColorChartImpl()
   %d_
   syn clear
 
-  if &t_Co == 256
-    let chart = s:GetChart(get(s:, 'chart', 'whales'))
-  elseif &t_Co == 88
-    let chart = s:GetChart(get(s:, 'chart', 'whales'))
-  else
-    let chart = s:GetChart(get(s:, 'chart', 'ribbon'))
-  endif
+  let chart = s:GetChart(s:chart)
 
   let s:origin_line = 1
   let message = 'Choose viewing origin ({/}): ' . join(s:origins[&t_Co], ' ')
